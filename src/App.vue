@@ -1,9 +1,9 @@
 <script setup>
 import { reactive, ref, computed } from "vue";
-import Task from "../components/Task.vue";
-import FilterTasks from "../components/FilterTasks.vue";
-import ModalWindow from "../components/modal/ModalWindow.vue";
-import AddTaskModal from "../components/modal/AddTaskModal.vue";
+import Task from "./components/Task.vue";
+import FilterTasks from "./components/FilterTasks.vue";
+import ModalWindow from "./components/modal/ModalWindow.vue";
+import AddTaskModal from "./components/modal/AddTaskModal.vue";
 
 const tasks = reactive([
   {
