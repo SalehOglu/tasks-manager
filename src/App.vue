@@ -4,99 +4,9 @@ import Task from "./components/Task.vue";
 import FilterTasks from "./components/FilterTasks.vue";
 import ModalWindow from "./components/modal/ModalWindow.vue";
 import AddTaskModal from "./components/modal/AddTaskModal.vue";
+import { useTaskStore } from "@/stores/tasks";
 
-const tasks = reactive([
-  {
-    name: "Website design",
-    description:
-      "Define the style guide, branding and create the webdesign on Figma.",
-    completed: true,
-    id: 1,
-  },
-  {
-    name: "Website development",
-    description: "Develop the portfolio website using Vue JS.",
-    completed: false,
-    id: 2,
-  },
-  {
-    name: "Hosting and infrastructure",
-    description:
-      "Define hosting, domain and infrastructure for the portfolio website.",
-    completed: false,
-    id: 3,
-  },
-  {
-    name: "Composition API",
-    description:
-      "Learn how to use the composition API and how it compares to the options API.",
-    completed: true,
-    id: 4,
-  },
-  {
-    name: "Pinia",
-    description: "Learn how to setup a store using Pinia.",
-    completed: true,
-    id: 5,
-  },
-  {
-    name: "Groceries",
-    description: "Buy rice, apples and potatos.",
-    completed: false,
-    id: 6,
-  },
-  {
-    name: "Bank account",
-    description: "Open a bank account for my freelance business.",
-    completed: false,
-    id: 7,
-  },
-]);
-
-const showError = ref(false);
-
-let newTask = {};
-
-let filterTasks = ref("");
-let modalActive = ref(false);
-
-function addNewTask() {
-  if (newTask.name && newTask.description) {
-    tasks.push({
-      // id: Math.floor(Math.random() * 1000000),
-      id: Math.max(...tasks.map((task) => task.id)) + 1,
-      completed: false,
-      name: newTask.name,
-      description: newTask.description,
-    });
-    newTask = {};
-    showError.value = false;
-  } else {
-    showError.value = true;
-  }
-}
-
-function toggleCompletex(id) {
-  tasks.forEach((task) => {
-    if (task.id === id) {
-      task.completed = !task.completed;
-    }
-  });
-}
-
-function setFilter(value) {
-  filterTasks.value = value;
-}
-
-const filterFunction = computed(() => {
-  if (filterTasks.value === "todo") {
-    return tasks.filter((task) => !task.completed);
-  } else if (filterTasks.value === "done") {
-    return tasks.filter((task) => task.completed);
-  } else {
-    return tasks;
-  }
-});
+const store = useTaskStore();
 </script>
 
 <template>
@@ -106,19 +16,19 @@ const filterFunction = computed(() => {
         <h1>Tasks Manager</h1>
       </div>
       <div class="header-side">
-        <button class="btn secondary" @click="modalActive = true">
+        <button class="btn secondary" @click="store.modalActive = true">
           + Add task
         </button>
       </div>
     </div>
 
-    <FilterTasks :filterTasks="filterTasks" @setFilter="setFilter" />
+    <FilterTasks />
 
     <div class="tasks">
-      <Task :tasks="filterFunction" @toggleComplete="toggleCompletex" />
+      <Task />
     </div>
 
-    <ModalWindow v-if="modalActive" @closeModal="modalActive = false">
+    <ModalWindow v-if="store.modalActive">
       <AddTaskModal />
     </ModalWindow>
   </main>

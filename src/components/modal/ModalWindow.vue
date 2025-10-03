@@ -1,13 +1,14 @@
 <script setup>
-import { defineEmits } from "vue";
 import CloseBtn from "./CloseBtn.vue";
-const emit = defineEmits(["closeModal"]);
+import { useTaskStore } from "@/stores/tasks";
+
+const store = useTaskStore();
 </script>
 
 <template>
   <div class="modal-wrapper" aria-modal="true" role="dialog" tabindex="-1">
     <div class="inner">
-      <CloseBtn @click="$emit('closeModal')" />
+      <CloseBtn @click="store.closeModal" />
 
       <slot></slot>
     </div>

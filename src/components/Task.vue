@@ -1,18 +1,22 @@
 <script setup>
-const props = defineProps(["tasks"]);
+import { useTaskStore } from "@/stores/tasks";
 
-const emit = defineEmits(["toggleComplete"]);
+const store = useTaskStore();
 </script>
 
 <template>
-  <div v-for="(task, index) in tasks" :key="task.id" class="task">
+  <div
+    v-for="(task, index) in store.filterFunction"
+    :key="task.id"
+    class="task"
+  >
     <h3>{{ task.name }}</h3>
     <p>{{ task.description }}</p>
     <div class="task-check">
       <input
         type="checkbox"
         :checked="task.completed"
-        @click="$emit('toggleComplete', task.id)"
+        @click="store.toggleComplete(task.id)"
       />
       <label>{{ task.completed ? "Done" : "To-do" }} </label>
     </div>
@@ -52,7 +56,7 @@ const emit = defineEmits(["toggleComplete"]);
     align-items: center;
     justify-content: center;
     position: absolute;
-    bottom: 10px;
+    bottom: 8px;
     right: 10px;
 
     label {

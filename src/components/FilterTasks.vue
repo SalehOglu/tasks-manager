@@ -1,6 +1,7 @@
 <script setup>
-const props = defineProps(["filterTasks"]);
-const emit = defineEmits(["setFilter"]);
+import { useTaskStore } from "@/stores/tasks";
+
+const store = useTaskStore();
 </script>
 <template>
   <div class="filters">
@@ -9,19 +10,23 @@ const emit = defineEmits(["setFilter"]);
       <div class="badges">
         <div
           class="badge"
-          @click="$emit('setFilter', 'todo')"
-          :class="{ selected: filterTasks === 'todo' }"
+          @click="store.setFilter('todo')"
+          :class="{ selected: store.filterTasks === 'todo' }"
         >
           To-Do
         </div>
         <div
           class="badge"
-          @click="$emit('setFilter', 'done')"
-          :class="{ selected: filterTasks === 'done' }"
+          @click="store.setFilter('done')"
+          :class="{ selected: store.filterTasks === 'done' }"
         >
           Done
         </div>
-        <span class="clear" v-if="filterTasks" @click="$emit('setFilter', '')">
+        <span
+          class="clear"
+          v-if="store.filterTasks"
+          @click="store.setFilter('')"
+        >
           x clear
         </span>
       </div>
