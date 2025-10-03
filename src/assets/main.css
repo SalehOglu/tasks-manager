@@ -13,6 +13,12 @@ body {
   padding: 60px;
 }
 
+@media (max-width: 600px) {
+  body {
+    padding: 40px 20px;
+  }
+}
+
 .container {
   max-width: 80rem;
   margin-inline: auto;
@@ -44,9 +50,17 @@ body {
   color: var(--white-color);
 }
 
+.btn.secondary:hover {
+  background-color: #2a3da0;
+}
+
 .btn.gray {
   background-color: var(--gray-color);
   color: var(--black-color);
+}
+
+.btn.gray:hover {
+  background-color: #e0d9d9;
 }
 
 .close-btn {

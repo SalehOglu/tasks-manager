@@ -9,7 +9,6 @@ const store = useTaskStore();
   <div class="modal-wrapper" aria-modal="true" role="dialog" tabindex="-1">
     <div class="inner">
       <CloseBtn @click="store.closeModal" />
-
       <slot></slot>
     </div>
   </div>

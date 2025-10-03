@@ -2,48 +2,31 @@ import { defineStore } from 'pinia'
 import { reactive, ref, computed } from 'vue';
 
 export const useTaskStore = defineStore('tasks', () => {
-    const tasks = reactive([
-    {
-        name: "Website design",
-        description:
-        "Define the style guide, branding and create the webdesign on Figma.",
-        completed: true,
-        id: 1,
-    },
+    const defaultTasks = [
     {
         name: "Website development",
         description: "Develop the portfolio website using Vue JS.",
         completed: false,
-        id: 2,
-    },
-    {
-        name: "Hosting and infrastructure",
-        description:
-        "Define hosting, domain and infrastructure for the portfolio website.",
-        completed: false,
-        id: 3,
+        id: 1,
     },
     {
         name: "Composition API",
         description:
         "Learn how to use the composition API and how it compares to the options API.",
         completed: true,
-        id: 4,
+        id: 2,
     },
     {
         name: "Pinia",
         description: "Learn how to setup a store using Pinia.",
         completed: true,
-        id: 5,
+        id: 3,
     },
-    {
-        name: "Groceries",
-        description: "Buy rice, apples and potatos.",
-        completed: false,
-        id: 6,
-    },
-    ]);
+    ];
 
+    const storedTasks = localStorage.getItem('tasks');
+
+    const tasks = reactive(storedTasks ? JSON.parse(storedTasks) : defaultTasks);
     let filterTasks = ref("");
 
     const filterFunction = computed(() => {
@@ -88,7 +71,7 @@ export const useTaskStore = defineStore('tasks', () => {
         if (newTask.name && newTask.description) {
             tasks.push({
             // id: Math.floor(Math.random() * 1000000),
-            id: Math.max(...tasks.map((task) => task.id)) + 1,
+            id: tasks.length ? Math.max(...tasks.map((task) => task.id)) + 1 : 1,
             completed: false,
             name: newTask.name,
             description: newTask.description,
@@ -96,11 +79,18 @@ export const useTaskStore = defineStore('tasks', () => {
             newTask.name = '';
             newTask.description = '';
             showError.value = false;
-            modalActive.value = false;
+            closeModal();
         } else {
             showError.value = true;
         }
     }
 
-  return { tasks, filterTasks, filterFunction, setFilter, toggleComplete, showError, newTask, addNewTask, modalActive, openModal, closeModal}
+    function deleteTask(id) {
+         const index = tasks.findIndex(task => task.id === id);
+        if (index !== -1) {
+            tasks.splice(index, 1);
+        }
+    }
+
+  return { tasks, filterTasks, filterFunction, setFilter, toggleComplete, showError, newTask, addNewTask, modalActive, openModal, closeModal, deleteTask};
 })

@@ -7,6 +7,11 @@ import AddTaskModal from "./components/modal/AddTaskModal.vue";
 import { useTaskStore } from "@/stores/tasks";
 
 const store = useTaskStore();
+
+store.$subscribe((mutation, state) => {
+  // persist the whole state to the local storage whenever it changes
+  localStorage.setItem("tasks", JSON.stringify(state.tasks));
+});
 </script>
 
 <template>
@@ -39,7 +44,11 @@ const store = useTaskStore();
   display: flex;
   justify-content: space-between;
   align-items: center;
-
+  @media (max-width: 600px) {
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 30px;
+  }
   .header-side {
     display: flex;
     align-items: center;
@@ -51,10 +60,14 @@ const store = useTaskStore();
       line-height: 47px;
       letter-spacing: 0em;
       text-align: left;
+      @media (max-width: 600px) {
+        text-align: center;
+      }
     }
 
     .secondary {
       margin-left: 12px;
+      width: 100px;
     }
   }
 }

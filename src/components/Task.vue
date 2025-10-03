@@ -1,4 +1,6 @@
 <script setup>
+import deleteBtn from "./modal/deleteBtn.vue";
+
 import { useTaskStore } from "@/stores/tasks";
 
 const store = useTaskStore();
@@ -13,12 +15,15 @@ const store = useTaskStore();
     <h3>{{ task.name }}</h3>
     <p>{{ task.description }}</p>
     <div class="task-check">
-      <input
-        type="checkbox"
-        :checked="task.completed"
-        @click="store.toggleComplete(task.id)"
-      />
-      <label>{{ task.completed ? "Done" : "To-do" }} </label>
+      <div class="form">
+        <input
+          type="checkbox"
+          :checked="task.completed"
+          @click="store.toggleComplete(task.id)"
+        />
+        <label>{{ task.completed ? "Done" : "To-do" }} </label>
+      </div>
+      <delete-btn @click="store.deleteTask(task.id)"></delete-btn>
     </div>
   </div>
 </template>
@@ -29,7 +34,7 @@ const store = useTaskStore();
   flex-direction: column;
   background-color: var(--white-color);
   color: var(--black-color);
-  padding: 20px;
+  padding: 20px 20px 40px;
   border-radius: 12px;
   position: relative;
 
@@ -53,11 +58,17 @@ const store = useTaskStore();
 
   .task-check {
     display: flex;
+    gap: 8px;
     align-items: center;
     justify-content: center;
     position: absolute;
     bottom: 8px;
     right: 10px;
+    .form {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
     label {
       font-size: 13px;
