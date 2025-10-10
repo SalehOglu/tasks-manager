@@ -23,7 +23,7 @@ const store = useTaskStore();
     ><br />
     <button @click="store.addNewTask" class="btn gray">Add Task</button>
     <p v-if="store.showError" class="error">
-      Please enter the title and description for the task!
+      Enter a valid title and description to add the task.
     </p>
   </div>
 </template>
@@ -33,6 +33,8 @@ const store = useTaskStore();
   background: #c73333;
   color: white;
   padding: 2px 10px;
+  border-radius: 4px;
+  font-size: 14px;
   max-width: max-content;
 }
 </style>

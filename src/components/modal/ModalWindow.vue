@@ -50,6 +50,13 @@ const store = useTaskStore();
       right: 15px;
       cursor: pointer;
       background-color: #fff;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      transition: all 0.2s ease-in-out;
+      &:hover {
+        transform: scale(1.1);
+      }
     }
 
     .form {
@@ -77,7 +84,7 @@ const store = useTaskStore();
         border-radius: 4px;
         padding: 8px 12px;
         margin-top: 5px;
-
+        resize: none;
         &::placeholder {
           color: #a6a6a6;
         }

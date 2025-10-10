@@ -68,7 +68,10 @@ export const useTaskStore = defineStore('tasks', () => {
     }
 
     function addNewTask() {
-        if (newTask.name && newTask.description) {
+        const taskName = newTask.name.trim();
+        const taskDesc = newTask.description.trim();
+
+        if (taskName && taskDesc) {
             tasks.push({
             // id: Math.floor(Math.random() * 1000000),
             id: tasks.length ? Math.max(...tasks.map((task) => task.id)) + 1 : 1,
